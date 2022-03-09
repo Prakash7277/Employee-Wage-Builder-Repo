@@ -7,39 +7,41 @@ public class Employee {
         //Welcome Message for User
         System.out.println("Welcome To Employee Wage Builder Made By Prakash Patil");
         //UC-2 Calculate Daily Employee Wage or Hour
-        final int WAGE_PER_HR = 20;
-        final int PART_TIME = 4;
-        final int FULL_TIME = 8;
-        int total_wage = 0;
+        //UC-1 Checking for Employee Present or Absent
+        int working_days = 0;
+        int working_hrs = 0;
+        Random random = new Random();
         //UC-5 20 Working Day Per Month
-        for( int day = 0; day <= 20; day ++) {
-            //UC-1 Checking for Employee Present or Absent
-            //Create Random object and generate 0 or 1 using % Operator
-            System.out.println("Day : "+day);
-            Random random = new Random();
+        while (working_hrs <= Constants.TOTAL_WORKING_HRS && working_days < Constants.WORKING_DAYS ) {
+            int total_wage = 0;
+            working_days++;
+            System.out.println("Day : "+working_days);
             int empAttendance = random.nextInt() % 2;
-            if (empAttendance == 0) {
+            if (empAttendance == Constants.IS_ABSENT ) {
                 System.out.println("Employee is Absent");
-                total_wage = 0;
             } else {
                 System.out.println("Employee is Present");
-
-                //UC-3 Employee Wage Part Time or Full Time
                 int emp_type = random.nextInt() % 2;
+                if(emp_type < 0){
+                    emp_type = -emp_type;
+                }
+                //UC-3 Employee Wage Part Time or Full Time
                 //UC-4 Using Switch Case Statement
                 switch (emp_type) {
-                    case 0:
+                    case Constants.IS_PART_TIME:
                         System.out.println("Part Time");
-                        total_wage = PART_TIME * WAGE_PER_HR;
+                        total_wage =Constants.WAGE_PER_HR * Constants.PART_TIME_HR;
+                        working_hrs = working_hrs + Constants.PART_TIME_HR;
                         break;
-                    case 1:
-                    case -1:
+                    case Constants.IS_FULL_TIME:
                         System.out.println("Full Time");
-                        total_wage = FULL_TIME * WAGE_PER_HR;
+                        total_wage = Constants.WAGE_PER_HR * Constants.FULL_TIME_HR;
+                        working_hrs = working_hrs + Constants.FULL_TIME_HR;
                         break;
                 }
             }
-            System.out.println("Wage=" + total_wage);
+            System.out.println("Total Wage = " + total_wage);
+            System.out.println("Total Working Hrs = "+ working_hrs);
         }
     }
 }
